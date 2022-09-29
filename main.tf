@@ -29,14 +29,14 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "centos7"
+  name          = "ubuntu"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 # The Resource section creates the virtual machine, in this case 
 # from a template
 
-resource "vsphere_virtual_machine" "vm" {
+resource "vsphere_virtual_machine" "LnT" {
   name             = "${var.servername}"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
@@ -76,31 +76,7 @@ resource "vsphere_virtual_machine" "vm" {
 # locally to the newly created server, then uses the remote exec provisioner to run the commands necessary
 # to install the rpm
 
-resource "null_resource" "vm" {
-  triggers {
-    public_ip = "${vsphere_virtual_machine.vm.default_ip_address}"
-  }
 
-  connection {
-    type = "ssh"
-    host = "${vsphere_virtual_machine.vm.default_ip_address}"
-    user = "root"
-    password = "${var.password}"
-    port = "22"
-    agent = false
-  }
-
-  provisioner "file" {
-      source      = "c:/files/${var.rpm}"
-      destination = "/tmp/${var.rpm}"
-    }
- provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/${var.rpm}",
-      "rpm -i /tmp/${var.rpm}",
-    ]
-  }
-}
 
 # Finally, we're outputting the IP address of the new VM
 
