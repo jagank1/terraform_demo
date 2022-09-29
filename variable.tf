@@ -9,10 +9,6 @@ variable "vsphere_user" {
 variable "vsphere_password" {
     description = "vsphere server password for the environment"
 }
-variable "rpm" {
-    description = "rpm for software install"
-    default = "installer.rpm"
-}
 variable "password" {
     description = "Root account password"
 }
