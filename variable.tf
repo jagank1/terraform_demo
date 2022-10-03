@@ -10,9 +10,6 @@ variable "vsphere_password" {
     description = "vsphere server password for the environment"
     default = ""
 }
-variable "password" {
-    description = "Root account password"
-}
 variable "servername" {
     description = "Server Name"
 }
