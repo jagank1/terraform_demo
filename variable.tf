@@ -10,4 +10,8 @@ variable "vsphere_password" {
     description = "vsphere server password for the environment"
     default = "Adm!n!str@t0r^"
 }
+variable "vsphere_servername" {
+    description = "server name"
+    default = ""
+}
 
